@@ -4,6 +4,7 @@ import work.oscarramos.juintapp.ejemplos.exeption.DineroInsuficienteException;
 
 import java.math.BigDecimal;
 import java.time.temporal.ChronoUnit;
+import java.util.Formatter;
 
 public class Cuenta {
     private String persona;
@@ -62,4 +63,6 @@ public class Cuenta {
 
         return this.persona.equals(c.getPersona()) && this.saldo.equals(c.getSaldo());
     }
+
+
 }
