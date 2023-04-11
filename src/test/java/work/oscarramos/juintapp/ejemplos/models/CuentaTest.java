@@ -25,7 +25,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import work.oscarramos.juintapp.ejemplos.exeption.DineroInsuficienteException;
 
-import javax.management.ConstructorParameters;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +38,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assumptions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 /*
     Este nos permite crear una sola instancia de la clase
@@ -291,7 +291,7 @@ class CuentaTest {
         Cuenta cuentaConstructor = new Cuenta("Paula Andrea", new BigDecimal("50000.123"));
         assertEquals("Paula Andrea", cuentaConstructor.getPersona(), "nombre esperado debe ser Paula Andrea");
     }
-    @ParameterizedTest(name = "nuemrmo {index} ejecutando con valor {0} - {argumentsWithNames}")
+    @ParameterizedTest(name = "numero {index} ejecutando con valor {0} - {argumentsWithNames}")
     @ValueSource(strings = {"100","200","300","500","700","1000"})
     void debitoParametrizadoTest(String monto) {
         cuenta.debito(new BigDecimal(monto));
@@ -299,7 +299,7 @@ class CuentaTest {
         assumeTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO)>0);
     }
 
-    @ParameterizedTest(name = "nuemrmo {index} ejecutando con valor {0} - {argumentsWithNames}")
+    @ParameterizedTest(name = "numero {index} ejecutando con valor {0} - {argumentsWithNames}")
     @CsvFileSource(resources = "/data.csv")
     void debitoParametrizadoCsvFileSourceTest(String monto) {
         cuenta.debito(new BigDecimal(monto));
@@ -307,7 +307,7 @@ class CuentaTest {
         assumeTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO)>0);
     }
 
-    @ParameterizedTest(name = "nuemrmo {index} ejecutando con valor {0} - {argumentsWithNames}")
+    @ParameterizedTest(name = "numero {index} ejecutando con valor {0} - {argumentsWithNames}")
     @MethodSource("montoList")
     void debitoParametrizadoMethodSourceTest(String monto) {
         cuenta.debito(new BigDecimal(monto));
@@ -319,7 +319,7 @@ class CuentaTest {
         return Arrays.asList("100","200","300","500","700","1000");
     }
 
-    @ParameterizedTest(name = "nuemrmo {index} ejecutando con valor {0} - {argumentsWithNames}")
+    @ParameterizedTest(name = "numero {index} ejecutando con valor {0} - {argumentsWithNames}")
     @CsvSource({"1,100","2,200","3,300","4,500","5,700","6,1000"})
     void debitoParametrizadoCsvSourceTest(String index, String monto) {
         System.out.println(index + " -> " + monto);
@@ -328,7 +328,7 @@ class CuentaTest {
         assumeTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO)>0);
     }
 
-    @ParameterizedTest(name = "nuemrmo {index} ejecutando con valor {0} - {argumentsWithNames}")
+    @ParameterizedTest(name = "numero {index} ejecutando con valor {0} - {argumentsWithNames}")
     @CsvSource({"200,100,Andres,Andres","250,200,Pablo,Pablo","350,300,Paola,Paola","560,500,Juan,Juan","790,700,Carlos,Carlos","1200,1000,Mauricio,Mauricio"})
     void debitoParametrizadoCsvSource2Test(String saldo, String monto,String esperado, String actual) {
         System.out.println(saldo + " -> " + monto);
@@ -343,10 +343,4 @@ class CuentaTest {
         assertNotNull(cuenta.getSaldo(), "saldo no de sebe ser nulo");
         assumeTrue(cuenta.getSaldo().compareTo(BigDecimal.ZERO)>0);
     }
-
-
-
-
-
-
 }
